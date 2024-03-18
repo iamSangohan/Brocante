@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section*{Algorithme 5 : Sous-routine KNN\_LEARN\_INIT(T)}
+
+\begin{enumerate}
+    \item Partitionner l'ensemble d'entraînement \(T\) en \(p\) groupes \((G_1, G_2, \ldots, G_p)\)
+    \item Pour chaque valeur de candidat \(K_i\), faire
+    \begin{enumerate}
+        \item Pour chaque groupe \(G_j\), faire
+        \begin{enumerate}
+            \item Initialiser l'ensemble d'erreurs \(errSet^{K_i}_{G_j} = \{\}\)
+            \item Pour chaque élément de données \((x, y) \in G_j\), faire
+            \begin{enumerate}
+                \item Si \(KNN\_PREDICT(T \setminus G_j, K_i, x) \neq y\), alors
+                \begin{enumerate}
+                    \item Ajouter \((x, y)\) à \(errSet^{K_i}_{G_j}\)
+                \end{enumerate}
+            \end{enumerate}
+            \item Calculer l'erreur \(error^{K_i}_{G_j} = \frac{|errSet^{K_i}_{G_j}|}{|G_j|}\)
+        \end{enumerate}
+        \item Calculer l'erreur globale \(error^{K_i} = \frac{1}{p} \sum_{j=1}^{p} error^{K_i}_{G_j}\)
+    \end{enumerate}
+    \item Sélectionner \(K\) tel que \(K = \arg\min_{K_i} error^{K_i}\)
+    \item Calculer l'ensemble d'erreurs global \(Error = \{(G_1, G_2, \ldots, G_p), \{errSet^{K}_{G_1}, \ldots, errSet^{K}_{G_p}\}\}\)
+    \item Retourner \((K, Error)\)
+\end{enumerate}
+
+\end{document}
